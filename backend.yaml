@@ -36,6 +36,13 @@
     ansible.builtin.copy:
       src: backend.service
       dest: /etc/systemd/system/backend.service
+  - name: install pip dependies
+    ansible.builtin.pip:
+      name: "{{ item }}"
+      executable: pip3.9
+    loop:
+    - PyMySQL
+    - cryptography
   - name: adding mysql schema
     community.mysql.mysql_db:
       state: import
@@ -44,5 +51,5 @@
       login_host: mysql.lakshman.site
       login_password: ExpenseApp@1
       login_user: root
-      
+
       
