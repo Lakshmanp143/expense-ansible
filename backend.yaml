@@ -51,5 +51,11 @@
       login_host: mysql.lakshman.site
       login_password: ExpenseApp@1
       login_user: root
+  - name: start,enable and daemon reload backend
+    ansible.builtin.systemd_service:
+      name: backend
+      stste: started
+      enabled: yes
+      daemon_reload: true
 
       
