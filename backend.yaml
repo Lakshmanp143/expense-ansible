@@ -8,8 +8,11 @@
     ansible.builtin.command: dnf module enable nodejs:20 -y
   - name: install nodejs
     ansible.builtin.package:
-      name: nodejs
+      name: "{{ item }}"
       state: present
+    loop:
+    - nodejs
+    - mysql
   - name: create expense user 
     ansible.builtin.user:
       name: expense
@@ -26,4 +29,20 @@
       src: /tmp/backend.zip
       dest: /app/
       remote_src: yes
+  - name: install nodejs dependies
+    community.general.npm:
+      path: /app/
+  - name: copy backend service
+    ansible.builtin.copy:
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
+  - name: adding mysql schema
+    community.mysql.mysql_db:
+      state: import
+      name: all
+      target: /app/schema/backend.sql
+      login_host: mysql.lakshman.site
+      login_password: ExpenseApp@1
+      login_user: root
+      
       
