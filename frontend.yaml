@@ -11,4 +11,28 @@
       name: nginx
       state: started
       enabled: yes
-  
+  - name: delete html directory
+    ansible.builtin.file:
+      state: absent 
+      path: /usr/share/nginx/html
+  - name: download the code in tmp directory
+    ansible.builtin.get_url:
+      dest: /tmp/backend.zip
+      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+  - name: unzip the code
+    ansible.builtin.unarchive:
+      src: /tmp/backend.zip
+      dest: /usr/share/nginx/html
+      remote_src: yes
+  - name: copy the expense.conf file 
+    ansible.builtin.copy:
+      src: expense.conf
+      dest: /usr/share/nginx/html
+  - name: restart the nginx
+    ansible.builtin.service:
+      name: nginx
+      state: restarted
+
+    
+
+
