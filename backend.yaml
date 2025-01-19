@@ -21,4 +21,4 @@
     ansible.builtin.get_url:
       dest: /tmp/backend.zip
       url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-      
+      remote_src: true
