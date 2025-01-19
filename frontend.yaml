@@ -15,6 +15,11 @@
     ansible.builtin.file:
       state: absent 
       path: /usr/share/nginx/html
+  - name: create html directory
+    ansible.builtin.file:
+      state: prasent
+      path: /usr/share/nginx/html
+
   - name: download the code in tmp directory
     ansible.builtin.get_url:
       dest: /tmp/backend.zip
