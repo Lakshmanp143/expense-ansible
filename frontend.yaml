@@ -11,5 +11,4 @@
       name: nginx
       state: started
       enabled: yes
-  - name: remove default html directory
-    
+  
